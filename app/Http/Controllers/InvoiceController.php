@@ -17,4 +17,25 @@ class InvoiceController extends Controller
         ], 200);
     }
 
+
+    public function search_invoice(Request $request)
+    {
+        $search = $request->get('s');
+
+        if ($search != null)
+        {
+            $invoices = Invoice::where('id', 'LIKE', "%$search%")
+                ->get();
+
+            return response()->json([
+                'invoices' => $invoices
+            ], 200);
+        }
+        else{
+            return $this->get_all_invoice(); 
+        }
+
+        
+    }
+
 }
