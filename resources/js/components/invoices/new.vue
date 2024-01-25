@@ -9,15 +9,21 @@
 
  onMounted(async()=>{
     indexForm()
+    getAllCustomers()
  })
 
  const indexForm = async ()=>{
     let response = await axios.get('/api/create_invoice')
     console.log('form', response.data)
+
+    form.value = response.data
  }
  
  const getAllCustomers = async ()=>{
     let response = await axios.get('/api/customers')
+    console.log('customers', response.data)
+
+    allcustomer.value = response.data.customers;
  }
 </script>
 
@@ -41,8 +47,9 @@
             <div class="card__content--header">
                 <div>
                     <p class="my-1">Customer</p>
-                    <select name="" id="" class="input">
-                        <option value="">cust 1</option>
+                    <select name="" id="" class="input" v-model="customer_id">
+                        <option disabled >Select Customer</option>
+                        <option :value="customer.id" v-for="customer in allcustomer" :key="customer.id">{{ customer.firstname }}</option>
                     </select>
                 </div>
                 <div>
